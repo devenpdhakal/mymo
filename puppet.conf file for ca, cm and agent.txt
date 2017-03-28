@@ -1,0 +1,115 @@
+#For CA
+
+[master]
+ca = true
+server = posca.master
+report = true
+pluginsync = true
+
+#For CM
+
+[main]
+ca_server = posca.master
+
+[master]
+ca = false
+server = poscm.master
+report = true
+pluginsync = true
+
+
+#For agent
+
+[main]
+ca_server = posca.master
+server = poscm.master
+
+[agent]
+report = true
+pluginsync = true
+
+
+----------------------------------------------------------------
+****************************************************************
+#for CA
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+
+    ca = true
+    server = puppetca.kop
+    report = true
+    pluginsync = true
+    pidfile = /var/run/puppet/master.pid
+
+[master]
+
+[agent]
+    # The file in which puppetd stores a list of the classes
+    # associated with the retrieved configuratiion.  Can be loaded in
+    # the separate ``puppet`` executable using the ``--loadclasses``
+    # option.
+    # The default value is '$confdir/classes.txt'.
+    classfile = $vardir/classes.txt
+    # Where puppetd caches the local configuration.  An
+    # extension indicating the cache format is added automatically.
+    # The default value is '$confdir/localconfig'.
+#Note: make sure to add ip address and hostname of puppetCA, in /etc/hosts file
+----------------------------------------------------------------
+****************************************************************
+#For CM
+
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+    ca_server = puppetca.kop
+    ca = false
+    server = puppetcm.kop
+    report = true
+    pluginsync = true
+    pidfile = /var/run/puppet/master.pid
+
+[master]
+
+[agent]
+    # The file in which puppetd stores a list of the classes
+    # associated with the retrieved configuratiion.  Can be loaded in
+    # the separate ``puppet`` executable using the ``--loadclasses``
+    # option.
+    # The default value is '$confdir/classes.txt'.
+    classfile = $vardir/classes.txt
+    #Where puppetd caches the local configuration.  An
+    # extension indicating the cache format is added automatically.
+    # The default value is '$confdir/localconfig'.
+    localconfig = $vardir/localconfig
+#Note: make sure to add ip address and hostname of puppetCA, puppetCM in /etc/hosts file
+----------------------------------------------------------------
+****************************************************************
+#For Agent
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+
+[agent]
+    ca_server = puppetca.kop
+    server = puppetcm.kop
+    pluginsync = true
+    report = true
+    pidfile = /var/run/puppet/agent.pid
+    # The file in which puppetd stores a list of the classes
+    # associated with the retrieved configuratiion.  Can be loaded in
+    # the separate ``puppet`` executable using the ``--loadclasses``
+    # option.
+    # The default value is '$confdir/classes.txt'.
+    classfile = $vardir/classes.txt
+    # Where puppetd caches the local configuration.  An
+    # extension indicating the cache format is added automatically.
+    # The default value is '$confdir/localconfig'.
+    localconfig = $vardir/localconfig
+#Note: make sure to add ip address and hostname of puppetCA, puppetCM and puppetAgent in /etc/hosts file
+----------------------------------------------------------------
+****************************************************************
+
